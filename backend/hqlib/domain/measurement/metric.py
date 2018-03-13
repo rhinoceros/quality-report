@@ -101,6 +101,7 @@ class Metric(object):
         from hqlib import metric_source
         history_sources = self._project.metric_sources(metric_source.History) if self._project else []
         self.__history = history_sources[0] if history_sources else None
+        self.extra_comment = ''
 
     def format_text_with_links(self, text: str) -> str:
         """ Format a text paragraph with additional url. """
@@ -294,7 +295,7 @@ class Metric(object):
     def comment(self) -> str:
         """ Return a comment on the metric. The comment is retrieved from either the technical debt or the subject. """
         comments = [comment for comment in (self.__non_default_target_comment(), self.__technical_debt_comment(),
-                                            self.__subject_comment()) if comment]
+                                            self.__subject_comment(), self.extra_comment) if comment]
         return ' '.join(comments)
 
     def __subject_comment(self) -> str:

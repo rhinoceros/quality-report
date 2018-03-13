@@ -80,6 +80,10 @@ class QualityReport(domain.DomainObject):
         """ Return the title of the quality report. """
         return 'Kwaliteitsrapportage {org}/{proj}'.format(org=self.__project.organization(), proj=self.__project.name())
 
+    def set_metric_comment(self, metric_id: str, comment: str):
+        x = [m for m in self.__metrics if m.id_string() == metric_id][0]
+        x.extra_comment = comment
+
     def project(self) -> domain.Project:
         """ Return the project this report is about. """
         return self.__project

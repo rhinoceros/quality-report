@@ -123,12 +123,27 @@ class ActionPanel extends React.Component {
             $('[data-toggle="tooltip"]').tooltip()
         })
     }
+   serverSave(id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/save",
+        data: '{"metric_id": "' + id + '", "comment": "This is a comment"}',
+    })
+    .done(function(msg){})
+    .fail(function(jqxhr, statusText, error) {
+        //Cross-domain! Python server has to be also on http://localhost:8080/
+    });
+}
+
     render() {
         return (
             <div className="btn-group" role="group" aria-label="Action Panel">
                 <button type="button" id={this.props.metric_id} className="btn btn-default" data-toggle="tooltip" data-placement="right"
                         title="Gebruik het Toon-menu om verborgen metrieken weer zichtbaar te maken." onClick={this.props.onClick}>
                         Verberg deze metriek
+                </button>
+                <button type="button" id={this.props.metric_id + "save"} className="btn btn-default" onClick={() => this.serverSave(this.props.metric_id)}>
+                        Save
                 </button>
             </div>
         );

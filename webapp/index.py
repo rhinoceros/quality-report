@@ -1,9 +1,11 @@
 
+import json
 import os
-from quality_report import Reporter
-
 import bottle
-from bottle import route, run, static_file
+
+from quality_report import Reporter
+from bottle import route, run, static_file, request, post
+
 
 @route('/hq/<project>/<filepath:path>')
 def index(project, filepath):
@@ -18,5 +20,30 @@ def index(project, filepath):
 
     Reporter(app.config['hq.source_root_dir']).create_report(report_dir)
     return static_file(filepath, report_dir)
+
+
+
+
+@post('/save')
+def index():
+    postdata = request.body.read()
+
+    data = json.loads(postdata)
+
+    app = bottle.default_app()
+    app.config.load_config('webapp.conf')
+    os.chdir(app.config['hq.app_dir'])
+
+    report_dir = "C:\\Projects\\quality-report\\docs\\examples\\x_report"
+    zoom = Reporter(app.config['hq.source_root_dir'])
+    report = zoom.create_report_web()
+
+    report.set_metric_comment(data['metric_id'], data['comment'])
+
+    zoom.save_report_web(report, report_dir)
+
+    return
+
+
 
 run(host='localhost', port=8080)

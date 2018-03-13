@@ -47,6 +47,7 @@ class App extends React.Component {
         this.onTab = this.onTab.bind(this);
         this.onFilter = this.onFilter.bind(this);
         this.onHideMetric = this.onHideMetric.bind(this);
+        this.reload = this.reload.bind(this);
     }
 
     filter_all(state, hidden_metrics) {
@@ -66,7 +67,7 @@ class App extends React.Component {
 
     componentDidMount() {
         let self = this;
-        $.getJSON("json/metrics.json", "", function(metrics_data) {
+        $.getJSON("json/metrics.json?v=" + Math.random(), "", function(metrics_data) {
             self.setState({
                 metrics_data: metrics_data,
                 metrics: self.filter(metrics_data, self.state.filter)
@@ -121,6 +122,14 @@ class App extends React.Component {
             self.storage.setItem('filter', JSON.stringify({filter: filter}));
             return {filter: filter, metrics: self.filter(previous_state.metrics_data, filter)};
         });
+    }
+
+    reload(event) {
+        this.setState({ 
+            metrics_data: 'loading', tab: 'metrics_tab', show_one_table: false, show_dashboard: true,
+            metrics: [], filter: this.filter_all(true, []) 
+        });
+        this.componentDidMount()
     }
 
     onHideMetric(event) {
@@ -180,7 +189,8 @@ class App extends React.Component {
                             on_toggle_one_table={this.onToggleOneTable}
                             tab={this.state.tab} on_tab={this.onTab}
                             filter={this.state.filter}
-                            on_filter={this.onFilter} />
+                            on_filter={this.onFilter} 
+                            reload={this.reload}/>
                     <MainContainer metrics_data={this.state.metrics_data}
                                    metrics={this.state.metrics}
                                    show_one_table={this.state.show_one_table}

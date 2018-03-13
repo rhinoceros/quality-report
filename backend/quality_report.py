@@ -42,6 +42,17 @@ class Reporter(object):  # pylint: disable=too-few-public-methods
         self.__create_report(quality_report, report_folder)
         return quality_report
 
+    def create_report_web(self):
+        """ Create, format, and write the quality report. """
+        quality_report = report.QualityReport(self.__project)
+        for history in self.__project.metric_sources(metric_source.History):
+            if history.filename():
+                history.add_report(quality_report)
+        return quality_report
+
+    def save_report_web(self, quality_report, report_folder):
+        self.__create_report(quality_report, report_folder)
+
     @classmethod
     def __create_report(cls, quality_report, report_dir):
         """ Format the quality report to HTML and write the files in the report folder. """

@@ -17,6 +17,14 @@ import React from 'react';
 import {Menu, MenuItem} from 'widgets/menu.js';
 
 
+class ReloadMenu extends React.Component {
+    render() {
+        return (
+            <MenuItem id="reload_navigation_menu_item" title="Herladen" onClick={this.props.reload} />
+        );
+    }
+}
+
 class MetricsMenu extends React.Component {
     render() {
         let section_menu_items = [];
@@ -115,6 +123,7 @@ class Menus extends React.Component {
             <ul className="nav navbar-nav">
                 <MenuItem id="metrics_tab" onClick={this.props.on_tab} title="Metrieken"
                           hide={this.props.tab === 'metrics_tab'} />
+                <ReloadMenu reload={this.props.reload} />
                 <MetricsMenu {...this.props} />
                 <MenuItem title="Toon" hide={this.props.tab === 'metrics_tab'} disabled={true} />
                 <FilterMenu {...this.props} />
