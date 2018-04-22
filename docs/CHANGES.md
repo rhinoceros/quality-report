@@ -1,3 +1,9 @@
+2018-07-27  Unreleased
+
+  * Feature: Metric sources can be registered with the project or with the domain object they apply to.
+    See https://github.com/ICTU/quality-report/wiki/Metric-sources.
+
+
 2018-07-27  Release 2.63.0
 
   * Feature: Add duration of manual test cases to the detail table of the duration of manual test cases metric. 
@@ -94,8 +100,8 @@
 2018-06-11  Release 2.60.5
 
   * Bug fix: Don't crash when SonarQube isn't available.
-    
-    
+
+
 2018-06-11  Release 2.60.4
 
   * Bug fix: Stop using the deprecated /projects/index SonarQube API to check for the existence of analyses in 
