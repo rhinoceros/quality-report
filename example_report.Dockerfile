@@ -14,8 +14,7 @@ WORKDIR /root/
 
 RUN git clone --depth 1 --single-branch --branch=master https://github.com/ICTU/quality-report.git
 
-# copying demo data to the location where url mocker looks for them
-RUN mkdir /usr/local/lib/python3.6/docs/ && mkdir /usr/local/lib/python3.6/docs/examples && cp -r /root/quality-report/docs/examples/example_metric_sources /usr/local/lib/python3.6/docs/examples
+WORKDIR /root/quality-report/
 
 RUN quality_report.py --project /root/quality-report/docs/examples/quality_report --report /root/quality-report/docs/examples/x_report --log INFO
 

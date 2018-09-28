@@ -14,4 +14,14 @@
 - check equals:
     actionTableHeader: 'Te late acties'
     actionTableLink: 'Wiki actions'
-    actionTableColumnHeader: 'Te laat '
+    actionTableColumnHeader: 'Te laat'
+    qr16: 'Example product heeft 0 critical violations. [SonarQube]'
+    qr17: 'Example product heeft 20 major violations. [SonarQube]'
+    qr18: 'Example product heeft 6 maintainability bugs. [SonarQube]'
+- set:
+    qr18expandButton:
+- wait to appear:
+    element1: qr18colapseButton
+- check equals:
+    qr18Major: 'Major'
+    qr18MajorNr: '6'

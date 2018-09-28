@@ -6,3 +6,10 @@ hideButton,css,section#section_PC div#table_PC tr#PC-02_details.yellow_metric bu
 actionTableHeader,css,section#section_PC div#table_PC tr#PC-02_details.yellow_metric>td>table>tbody h4.panel-heading
 actionTableLink,css,section#section_PC div#table_PC tr#PC-02_details.yellow_metric>td>table>tbody>tr+tr>td>div.row>div.col-sm-4 div.panel-body>table>tbody>tr>td>a
 actionTableColumnHeader,css,section#section_PC div#table_PC tr#PC-02_details.yellow_metric>td>table>tbody>tr+tr>td>div.row>div.col-sm-4 div.panel-body>table>thead>tr>th+th
+qr16,css,tr#QR-15_details+tr td+td+td+td+td
+qr17,css,tr#QR-16_details+tr td+td+td+td+td
+qr18,css,tr#QR-17_details+tr td+td+td+td+td
+qr18expandButton,css,tr#QR-17_details+tr>td>button
+qr18colapseButton,css,button#QR-18
+qr18Major,css,tr#QR-18_details a[href='https://my.sonarqube.com/project/issues?id=nl.comp:my_project&resolved=false&types=BUG&severities=MAJOR']
+qr18MajorNr,css,tr#QR-18_details>td>table>tbody>tr+tr>td>div.row div.panel div.panel-body>table>tbody>tr+tr+tr>td+td
