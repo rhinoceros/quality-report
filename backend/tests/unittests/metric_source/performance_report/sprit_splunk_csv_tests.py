@@ -88,6 +88,14 @@ class SpiritSplunkCSVPerformanceReportTest(unittest.TestCase):
         self.assertEqual(datetime.datetime.min,
                          SpiritSplunkCSVReportWithoutUrls('http://report').datetime('ABC'))
 
+    def test_duration(self):
+        """ Test the duration of the performance report. """
+        self.assertEqual(datetime.timedelta.max, self._performance_report.duration("ABC")) 
+
+    def test_fault_percentage(self):
+        """ Test the fault percentage of the performance report. """
+        self.assertEqual(-1, self._performance_report.fault_percentage("ABC")) 
+
 
 class SpiritSplunkCSVPerformanceReportMultipleReportsTest(SpiritSplunkCSVPerformanceReportTest):
     """ Unit tests for a performance report metric source with multiple reports. """

@@ -82,6 +82,11 @@ class PerformanceReport(domain.MetricSource):
             return self._duration_from_url(url)
         return datetime.timedelta.max
 
+    def fault_percentage(self, product: str) -> float:
+        """ Return the percentage of failed transactions in the performance test report(s) for the product. """
+        percentages = [self._fault_percentage_from_url(url) for url in self.urls(product)]
+        return -1 if -1 in percentages else max(percentages, default=-1)
+
     def _datetime_from_url(self, url: str) -> DateTime:
         """ Return the date when the performance was last measured. """
         raise NotImplementedError
@@ -100,6 +105,10 @@ class PerformanceReport(domain.MetricSource):
 
     def _has_query_color(self, row, color: str) -> bool:
         """ Return whether the row has a query with the specified color. """
+        raise NotImplementedError
+
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the fault percentage in the performance report. """
         raise NotImplementedError
 
 
@@ -125,6 +134,10 @@ class PerformanceLoadTestReport(PerformanceReport):
         """ Return whether the row has a query has the specified color. """
         raise NotImplementedError
 
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the fault percentage in the performance report. """
+        raise NotImplementedError
+
 
 class PerformanceEnduranceTestReport(PerformanceReport):
     """ Performance endurance test report. """
@@ -148,6 +161,9 @@ class PerformanceEnduranceTestReport(PerformanceReport):
         """ Return whether the row has a query has the specified color. """
         raise NotImplementedError
 
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the fault percentage in the performance report. """
+        raise NotImplementedError
 
 class PerformanceScalabilityTestReport(PerformanceReport):
     """ Performance scalability test report. """
@@ -169,4 +185,8 @@ class PerformanceScalabilityTestReport(PerformanceReport):
 
     def _has_query_color(self, row, color: str) -> bool:
         """ Return whether the row has a query has the specified color. """
+        raise NotImplementedError
+
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the fault percentage in the performance report. """
         raise NotImplementedError

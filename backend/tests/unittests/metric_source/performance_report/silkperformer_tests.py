@@ -95,6 +95,19 @@ class SilkPerformerTest(unittest.TestCase):
         self.assertEqual(datetime.timedelta.max,
                          SilkPerformerWithoutUrls('http://report').duration(('.*[0-9][0-9].*', 'dummy')))
 
+    def test_fault_percentage(self):
+        """ Test that the percentage of failed transactions can be read from the report. """
+        self.assertEqual(0.03, self._performance_report.fault_percentage(('.*[0-9][0-9].*', 'dummy')))
+
+    def test_fault_percentage_without_urls(self):
+        """ Test that - is returned if there are no report urls to consult. """
+        class SilkPerformerWithoutUrls(SilkPerformerUnderTest):
+            """ Simulate missing urls. """
+            def urls(self, product):  # pylint: disable=unused-argument
+                return []
+
+        self.assertEqual(-1, SilkPerformerWithoutUrls('http://report').fault_percentage(('.*[0-9][0-9].*', 'dummy')))
+
 
 class SilkPerformerMultipleReportsTest(SilkPerformerTest):
     """ Unit tests for the Silk Performer performance report metric source with multiple reports. """
@@ -121,6 +134,10 @@ class SilkPerformerInvalidReportTest(unittest.TestCase):
         """ Test that the duration of an invalid report is the max duration. """
         self.assertEqual(datetime.timedelta.max, SilkPerformerUnderTest('http://invalid/').duration('p5'))
 
+    def test_fault_percentage_with_invalid_report(self):
+        """ Test that the fault percentage of an invalid report is -1. """
+        self.assertEqual(-1, SilkPerformerUnderTest('http://invalid/').fault_percentage('p5'))
+
 
 class SilkPerformerMissingTest(unittest.TestCase):
     """ Unit tests for a missing Silk Performer performance report metric source. """
@@ -144,3 +161,7 @@ class SilkPerformerMissingTest(unittest.TestCase):
     def test_duration_with_missing_report(self):
         """ Test that the duration of a missing report is the max duration. """
         self.assertEqual(datetime.timedelta.max, SilkPerformerUnderTest('http://error/').duration('p5'))
+
+    def test_fault_percentage_with_missing_report(self):
+        """ Test that the fault percentage of a missing report is -1. """
+        self.assertEqual(-1, SilkPerformerUnderTest('http://error/').fault_percentage('p5'))

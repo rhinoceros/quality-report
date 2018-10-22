@@ -76,6 +76,14 @@ class SilkPerformerPerformanceReport(performance_report.PerformanceReport, beaut
             return datetime.timedelta.max
         return self.__duration_from_soup(soup)
 
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the percentage of failed transactions in the performance test. """
+        try:
+            soup = self.soup(url)
+        except url_opener.UrlOpener.url_open_exceptions:
+            return -1
+        return self.__fault_percentage_from_soup(soup)
+
     @staticmethod
     def __datetime_from_soup(soup) -> DateTime:
         """ Return the date when performance was last measured. """
@@ -111,6 +119,16 @@ class SilkPerformerPerformanceReport(performance_report.PerformanceReport, beaut
             year, month, day, hour, minute, second = [int(part) for part in date_time_string.split('.')][:6]
             date_times.append(datetime.datetime(year, month, day, hour, minute, second))
         return max(date_times) - min(date_times)
+
+    @staticmethod
+    def __fault_percentage_from_soup(soup) -> float:
+        """ Return the percentage of failed transactions of the performance test. """
+        try:
+            td = soup("td", attrs={"id": ["transactions_failed"]})[0]
+        except IndexError:
+            logging.warning("Can't get fault percentage from performance report")
+            return -1
+        return float(td.string)
 
     def urls(self, product: str) -> Iterable[str]:  # pylint: disable=unused-argument
         """ Return the url(s) of the performance report for the specified product and version. """

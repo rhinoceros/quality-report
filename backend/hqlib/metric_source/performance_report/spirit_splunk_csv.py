@@ -68,6 +68,11 @@ class SpiritSplunkCSVPerformanceReport(performance_report.PerformanceReport, url
         logging.warning("The %s metric source doesn't currently contain duration information.", self.metric_source_name)
         return datetime.timedelta.max  # Information is not available in the report.
 
+    def _fault_percentage_from_url(self, url: str) -> float:
+        """ Return the percetange of failed transactions in the performance test. """
+        logging.warning("The %s metric source doesn't currently contain fault information.", self.metric_source_name)
+        return -1  # Information is not available in the report.
+
     def urls(self, product: str) -> Iterable[str]:  # pylint: disable=unused-argument
         """ Return the url(s) of the performance report for the specified product and version. """
         return self.__report_urls or [self.url()]
