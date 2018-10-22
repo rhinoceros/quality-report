@@ -67,7 +67,7 @@ class SilkPerformerTest(unittest.TestCase):
 
     def test_date_of_last_measurement(self):
         """ Test that the date of the last measurement is correctly parsed from the report. """
-        self.assertEqual(datetime.datetime(2018, 6, 6, 1, 45, 2),
+        self.assertEqual(datetime.datetime(2018, 10, 21, 1, 47, 19),
                          self._performance_report.datetime(('.*[0-9][0-9].*', 'dummy')))
 
     def test_date_without_urls(self):
@@ -82,7 +82,7 @@ class SilkPerformerTest(unittest.TestCase):
 
     def test_duration(self):
         """ Test tha the duration of the test is correct. """
-        self.assertEqual(datetime.timedelta(minutes=60, seconds=0),
+        self.assertEqual(datetime.timedelta(seconds=3704),
                          self._performance_report.duration(('.*[0-9][0-9].*', 'dummy')))
 
     def test_duration_without_urls(self):
